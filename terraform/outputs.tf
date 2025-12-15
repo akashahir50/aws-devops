@@ -42,61 +42,46 @@ output "alb_url" {
   value       = "http://${aws_lb.main.dns_name}"
 }
 
-output "codepipeline_name" {
-  description = "Name of the CodePipeline"
-  value       = aws_codepipeline.main.name
-}
-
-output "codepipeline_url" {
-  description = "URL to view the CodePipeline in AWS Console"
-  value       = "https://${var.aws_region}.console.aws.amazon.com/codesuite/codepipeline/pipelines/${aws_codepipeline.main.name}/view"
-}
-
-output "codebuild_project_name" {
-  description = "Name of the CodeBuild project"
-  value       = aws_codebuild_project.app.name
-}
-
-output "s3_artifacts_bucket" {
-  description = "Name of the S3 bucket for pipeline artifacts"
-  value       = aws_s3_bucket.artifacts.bucket
-}
-
 output "cloudwatch_log_group_ecs" {
   description = "CloudWatch log group for ECS tasks"
   value       = aws_cloudwatch_log_group.ecs.name
 }
 
-output "cloudwatch_log_group_codebuild" {
-  description = "CloudWatch log group for CodeBuild"
-  value       = aws_cloudwatch_log_group.codebuild.name
+output "jenkins_url" {
+  description = "Jenkins server URL"
+  value       = "http://${aws_instance.jenkins.public_ip}:8080"
 }
 
 output "deployment_instructions" {
-  description = "Instructions for deploying the application"
+  description = "Instructions for deploying the application using Jenkins"
   value = <<-EOT
-    
+
     ========================================
-    AWS DevOps Pipeline Deployment Complete!
+    Jenkins + ECS Deployment Ready!
     ========================================
-    
-    Application URL: http://${aws_lb.main.dns_name}
-    
-    Pipeline Console: https://${var.aws_region}.console.aws.amazon.com/codesuite/codepipeline/pipelines/${aws_codepipeline.main.name}/view
-    
-    ECS Console: https://${var.aws_region}.console.aws.amazon.com/ecs/home?region=${var.aws_region}#/clusters/${aws_ecs_cluster.main.name}/services
-    
+
+    Application URL:
+    http://${aws_lb.main.dns_name}
+
+    Jenkins URL:
+    http://${aws_instance.jenkins.public_ip}:8080
+
+    ECS Console:
+    https://${var.aws_region}.console.aws.amazon.com/ecs/home?region=${var.aws_region}#/clusters/${aws_ecs_cluster.main.name}/services
+
     Next Steps:
-    1. Push code to GitHub to trigger the pipeline
-    2. Monitor pipeline execution in AWS Console
-    3. Access your application at the ALB URL above
-    4. View logs in CloudWatch: ${aws_cloudwatch_log_group.ecs.name}
-    
-    To trigger the pipeline manually:
-    git add .
-    git commit -m "Trigger pipeline"
-    git push origin ${var.github_branch}
-    
+    1. Open Jenkins and complete initial setup
+    2. Create a Pipeline job using the Jenkinsfile
+    3. Push code to GitHub to trigger Jenkins
+    4. Monitor deployment in Jenkins UI
+    5. View logs in CloudWatch: ${aws_cloudwatch_log_group.ecs.name}
+
+    To trigger Jenkins manually:
+    - Open Jenkins UI
+    - Click "Build Now"
+
     ========================================
+
   EOT
 }
+

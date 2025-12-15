@@ -1,7 +1,6 @@
 # ========================================
-# Terraform Variables Configuration
-# ========================================
 # Copy this file to terraform.tfvars and update with your values
+# ========================================
 
 # AWS Configuration
 aws_region   = "us-east-1"
@@ -11,7 +10,7 @@ environment  = "prod"
 # GitHub Configuration
 github_repo   = "Amitabh-DevOps/aws-devops" # Use your GitHub username
 github_branch = "main"
-github_token = "your-github-personal-access-token-here"  # Add your token
+github_token  = "your-github-personal-access-token-here"  # Add your token
 
 # Container Configuration
 container_port   = 3000
@@ -26,3 +25,8 @@ private_subnet_cidrs = ["10.0.11.0/24", "10.0.12.0/24"]
 
 # Health Check
 health_check_path = "/health"
+
+# EC2 Configuration for Jenkins
+key_name    = "your-keypair-name"      # Replace with your existing EC2 key pair
+jenkins_ami = "ami-0a4408457f9a03be3"  # Replace with latest Ubuntu 22.04 AMI for your region
+

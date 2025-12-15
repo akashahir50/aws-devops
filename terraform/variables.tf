@@ -85,3 +85,13 @@ variable "private_subnet_cidrs" {
   type        = list(string)
   default     = ["10.0.11.0/24", "10.0.12.0/24"]
 }
+variable "key_name" {
+  description = "EC2 key pair name for SSH access"
+  type        = string
+}
+
+variable "jenkins_ami" {
+  description = "AMI ID for Jenkins EC2"
+  type        = string
+}
+
